@@ -1,8 +1,35 @@
 import React from "react";
 import Navbar from "../Componants/Navbar";
 import Restaurants from "../Componants/Restaurants";
+import { useState , useEffect } from "react";
 
 const Home = () => {
+ const [restaurant, setRestuarants] = useState([])
+ useEffect(()=>{
+  fetch("http://localhost:5000/restaurants").then((res)=>{
+    //convert to json
+    return res.json()
+  }).then((response)=>{
+    //save to stage
+    setRestuarants(response)
+  }).catch((err)=>{
+    //catch error
+    console.log(err.message);
+  })
+ },[])
+
+//  const handleInputChange = (e) => {
+//   const searchTerm = e.target.value;
+//   setRestuarants(searchTerm)
+
+//   const filteredItems = restaurant.filter((user) =>
+//     user.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+
+//   setRestuarants(filteredItems);
+//  }
+
+
   return (
     <div className="container mx-auto">
       <Navbar />
@@ -28,11 +55,15 @@ const Home = () => {
               <path d="m21 21-4.3-4.3"></path>
             </g>
           </svg>
-          <input type="search" required placeholder="Search" />
+          <input type="text"
+          // value={restaurant}
+          // onChange={handleInputChange}
+          required placeholder="Search" />
         </label>
       </div>
-      //result
-      <Restaurants />
+      <Restaurants 
+      restaurant={restaurant}
+      />
     </div>
   );
 };

@@ -2,8 +2,9 @@ import React from "react";
 
 const Navbar = () => {
   const menuitem = [
-    { name: "add restaurant", url: "/" },
-    { name: "search", url: "/" },
+    { name: "Add restaurant", url: "/" },
+    { name: "Search", url: "/" },
+    { name: "About us", url: "/" },
   ];
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -49,8 +50,8 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end gap-2">
-        <a className="btn">Button</a>
-        <button className="btn btn-success ">Success</button>
+        <a className="btn">Register</a>
+        <button className="btn btn-success ">login</button>
       </div>
     </div>
   );

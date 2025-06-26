@@ -1,10 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import Home from "./Pages/Home";
-import Addrestaurant from "./Pages/Addrestaurant";
+import rounter from "./routes/rounter";
+import { RouterProvider } from "react-router-dom";
+import Navbar from "./Componants/Navbar";
+
+
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Addrestaurant />
+    <Navbar/>
+    <RouterProvider router={rounter}></RouterProvider>
   </StrictMode>
 );

@@ -1,10 +1,30 @@
 import React from "react";
-import Navbar from "../Componants/Navbar";
+
 import Restaurants from "../Componants/Restaurants";
 import { useState , useEffect } from "react";
 
 const Home = () => {
- const [restaurant, setRestuarants] = useState([])
+ const [restaurants, setRestuarants] = useState([])
+
+ const [filteredrestaurant, setFilteredrestaurant] = useState([])
+
+ const handleSearch = (keyword) => {
+    if(keyword === ""){
+      setFilteredrestaurant(restaurants)
+      return;
+    }
+    const result = restaurants.filter((restaurant) => {
+      return(
+        restaurant.title.toLowerCase().includes(keyword.toLocaleLowerCase())  ||
+        restaurant.type.toLowerCase().includes(keyword.toLocaleLowerCase())
+      );
+
+      
+
+    })
+    setFilteredrestaurant(result)
+ }
+
  useEffect(()=>{
   fetch("http://localhost:5000/restaurants").then((res)=>{
     //convert to json
@@ -12,27 +32,17 @@ const Home = () => {
   }).then((response)=>{
     //save to stage
     setRestuarants(response)
+    setFilteredrestaurant(response)
   }).catch((err)=>{
     //catch error
     console.log(err.message);
   })
  },[])
 
-//  const handleInputChange = (e) => {
-//   const searchTerm = e.target.value;
-//   setRestuarants(searchTerm)
-
-//   const filteredItems = restaurant.filter((user) =>
-//     user.firstName.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-
-//   setRestuarants(filteredItems);
-//  }
-
 
   return (
     <div className="container mx-auto">
-      <Navbar />
+     
       <h1 className="title justify-center text-3xl text-center m-5 p-5">
         {" "}
         Grab restaurant
@@ -56,13 +66,14 @@ const Home = () => {
             </g>
           </svg>
           <input type="text"
+          name="keyword"
           // value={restaurant}
-          // onChange={handleInputChange}
+          onChange={(e)=>handleSearch(e.target.value)}
           required placeholder="Search" />
         </label>
       </div>
       <Restaurants 
-      restaurant={restaurant}
+      restaurant={filteredrestaurant}
       />
     </div>
   );

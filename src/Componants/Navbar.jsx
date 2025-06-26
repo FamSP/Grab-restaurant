@@ -1,9 +1,10 @@
 import React from "react";
+import Home from "../Pages/Home";
 
 const Navbar = () => {
   const menuitem = [
-    { name: "Add restaurant", url: "/" },
-    { name: "Search", url: "/" },
+    { name: "Add restaurant", url: "/addrestaurant" },
+    { name: "Update", url: "/update" },
     { name: "About us", url: "/" },
   ];
   return (
@@ -38,7 +39,7 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Garb restaurant</a>
+        <a href="/" className="btn btn-ghost text-xl">Garb restaurant</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">

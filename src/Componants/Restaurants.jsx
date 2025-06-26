@@ -11,6 +11,7 @@ const Restaurants = ({restaurant}) => {
       {restaurant && restaurant.map((restaurant)=>(
         <Card
           key={restaurant.id}
+          id={restaurant.id}
           img={restaurant.img}
           title={restaurant.title}
           type={restaurant.type}

@@ -1,13 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import React from 'react'
+import { useParams } from 'react-router-dom';
 
 
-const Addrestaurant = () => {
+const Update = () => {
+    //get id from url
+    const {id} = useParams();
     const[restaurant, setRestuarant] = useState({
         title:"",
         type:"",
         img:""
     });
+    //2. get restaurant by id
+    useEffect( () => {
+        fetch("http://localhost:5000/restaurants/" + id)
+        //convert to json
+        .then((res)=>{
+            return res.json();
+        })
+        //save to stage
+        .then((response)=>{
+            setRestuarant(response);
+        })
+        .catch((err)=>{
+            console.log(err.message)
+        })
+    } , [id]);
+
     const handle = (e)=>{
         const { name, value } = e.target;
         setRestuarant({...restaurant,[name]: value})
@@ -15,8 +34,8 @@ const Addrestaurant = () => {
 
     const handleSubmit = async () => {
         try{
-            const response = await fetch("http://localhost:5000/restaurants",{
-                method:"POST",
+            const response = await fetch("http://localhost:5000/restaurants/" + id,{
+                method:"PUT",
                 body: JSON.stringify(restaurant)
             });
             if(response.ok){
@@ -32,10 +51,10 @@ const Addrestaurant = () => {
 
   return (
     <div className="container mx-auto ">
-     
+        
         <h1 className="title justify-center text-3xl text-center m-5 p-5">
         {" "}
-        Add New Restaurant
+        Update restaurant
       </h1>
         <div className='mt-10'>
         <div className='flex justify-center'>
@@ -77,10 +96,10 @@ const Addrestaurant = () => {
         <div className='flex justify-end gap-5 px-80 mt-10'>
         <button className="btn btn-accent"
         onClick={handleSubmit}>Add</button>
-        <a className="btn btn-error">Cancel</a>
+        <button className="btn btn-error">Cancel</button>
         </div>
     </div>
   )
 }
 
-export default Addrestaurant
+export default Update
